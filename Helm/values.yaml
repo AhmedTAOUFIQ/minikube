@@ -1,6 +1,7 @@
 backend:
   replicaCount: 1
-  openai_api_key: "ADD_YOU_OPEN_AI_KEY_HERE"
+  openai:
+    apiKey: "ADD_YOU_OPEN_AI_KEY_HERE"
   mongoServiceHost: "mongo-service.default.svc.cluster.local"
 
 mongo:
