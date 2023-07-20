@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: backend
+spec:
+  replicas: {{ .Values.backend.replicaCount }}
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      initContainers:  # <-- Corrected indentation
+        - name: wait-for-mongodb
+          image: busybox:latest
+          command: ['sh', '-c', 'until wget -O /dev/null http://mongo-service.default.svc.cluster.local:27017; do echo "Waiting for MongoDB to start..."; sleep 20; done;']
+      containers:
+        - name: backend
+          image: ahmedtaoufiq/backend
+          ports:
+            - containerPort: 8080
+          env:
+            - name: openai_api_key
+              value: {{ .Values.backend.openai.apiKey }}
+            - name: fost
+              value: {{ .Values.backend.mongoServiceHost }}

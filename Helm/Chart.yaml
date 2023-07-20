@@ -1,0 +1,5 @@
+apiVersion: v2
+name: Helm
+description: A Helm chart for deploying the Spring Boot app and MongoDB service.
+version: 0.1.0
+appVersion: 1.0.0
